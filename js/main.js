@@ -17,7 +17,7 @@ $(function() {
     var video = document.createElement('video');
   
     video.autoplay = true;
-    video.src = "assets/beach_resized.mp4";
+    video.src = "assets/universe.mp4";
     console.log(video.src)
     video.muted = true
     video.load()
@@ -37,6 +37,9 @@ $(function() {
     
     
     //cubes
+  
+  		
+  	
     
     var near = 1, far = 200, resolution = 1000
     const cubeCamera = new THREE.CubeCamera(near, far, resolution); 
@@ -60,6 +63,11 @@ $(function() {
     var cubeHigh = new THREE.Mesh( geometry, material );
     var cubeHigh2 = new THREE.Mesh( geometry, material );
     var cubeHigh3 = new THREE.Mesh( geometry, material );
+    
+    
+  
+    
+    
     scene.add( cube );
     scene.add( cube2 );
     scene.add( cube3 );
@@ -85,6 +93,80 @@ $(function() {
     camera.position.x = 20;
     camera.position.y = 14;
     
+    
+    var customMaterial = new THREE.ShaderMaterial( 
+    {
+        uniforms: 
+      { 
+        "c":   { type: "f", value: 1.0 },
+        "p":   { type: "f", value: 1.4 },
+        glowColor: { type: "c", value: new THREE.Color(0xffff00) },
+        viewVector: { type: "v3", value: camera.position }
+      },
+      vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
+      fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+      side: THREE.FrontSide,
+      blending: THREE.AdditiveBlending,
+      transparent: true
+    }   );
+    
+    var customMaterialBlue = customMaterial.clone()
+    customMaterialBlue.uniforms.glowColor.value.setHex(0x0080ff)
+    var customMaterialGreen = customMaterial.clone()
+    customMaterialGreen.uniforms.glowColor.value.setHex(0x00ff00)
+    
+    var cubeGlow = new THREE.Mesh( geometry, customMaterial.clone() );
+    
+    cubeGlow.scale.multiplyScalar(1.2);
+    scene.add( cubeGlow );
+    var cubeGlow2 = new THREE.Mesh( geometry, customMaterial.clone() );
+  
+    cubeGlow2.position.z -= 10 
+    cubeGlow2.scale.multiplyScalar(1.2);
+    scene.add(cubeGlow2)
+    var cubeGlow3 = new THREE.Mesh( geometry, customMaterial.clone() );
+    
+    cubeGlow3.position.z -= 20
+    cubeGlow3.scale.multiplyScalar(1.2);
+    scene.add(cubeGlow3)
+    
+    var cubeLowGlow = new THREE.Mesh( geometry, customMaterialBlue.clone() );
+    
+    cubeLowGlow.position.x -= 10
+    cubeLowGlow.scale.multiplyScalar(1.2);
+    scene.add( cubeLowGlow );
+    var cubeLowGlow2 = new THREE.Mesh( geometry, customMaterialBlue.clone() );
+    
+    cubeLowGlow2.position.z -= 10 
+    cubeLowGlow2.position.x -= 10
+    cubeLowGlow2.scale.multiplyScalar(1.2);
+    scene.add(cubeLowGlow2)
+    var cubeLowGlow3 = new THREE.Mesh( geometry, customMaterialBlue.clone() );
+  
+    cubeLowGlow3.position.z -= 20
+    cubeLowGlow3.position.x -= 10
+    cubeLowGlow3.scale.multiplyScalar(1.2);
+    scene.add(cubeLowGlow3)
+    
+    var cubeHighGlow = new THREE.Mesh( geometry, customMaterialGreen.clone() );
+    
+    cubeHighGlow.position.x += 10
+    cubeHighGlow.scale.multiplyScalar(1.2);
+    scene.add( cubeHighGlow );
+    var cubeHighGlow2 = new THREE.Mesh( geometry, customMaterialGreen.clone() );
+  
+    cubeHighGlow2.position.z -= 10 
+    cubeHighGlow2.position.x += 10
+    cubeHighGlow2.scale.multiplyScalar(1.2);
+    scene.add(cubeHighGlow2)
+    var cubeHighGlow3 = new THREE.Mesh( geometry, customMaterialGreen.clone() );
+  
+    cubeHighGlow3.position.z -= 20
+    cubeHighGlow3.position.x += 10
+    cubeHighGlow3.scale.multiplyScalar(1.2);
+    scene.add(cubeHighGlow3)
+    
+    
     //ambient light
     var light = new THREE.AmbientLight( 0x404040 ); // soft white light
     scene.add( light );
@@ -98,24 +180,49 @@ $(function() {
     	requestAnimationFrame( animate );
       cube.position.y = midHeight * 20
       cube.scale.y = midHeight * 20
+      cubeGlow.position.y = midHeight * 21
+      cubeGlow.scale.y = midHeight * 21
+      
       cube2.position.y = midHeight * 20
       cube2.scale.y = midHeight * 20
+      cubeGlow2.position.y = midHeight * 21
+      cubeGlow2.scale.y = midHeight * 21
+      
       cube3.position.y = midHeight * 20
       cube3.scale.y = midHeight * 20
+      cubeGlow3.position.y = midHeight * 21
+      cubeGlow3.scale.y = midHeight * 21
       
       cubeLow.position.y = lowHeight * 20
       cubeLow.scale.y = lowHeight * 20
+      cubeLowGlow.position.y = lowHeight * 21
+      cubeLowGlow.scale.y = lowHeight * 21
+      
       cubeLow2.position.y = lowHeight * 20
       cubeLow2.scale.y = lowHeight * 20
+      cubeLowGlow2.position.y = lowHeight * 21
+      cubeLowGlow2.scale.y = lowHeight * 21
+      
       cubeLow3.position.y = lowHeight * 20
       cubeLow3.scale.y = lowHeight * 20
+      cubeLowGlow3.position.y = lowHeight * 21
+      cubeLowGlow3.scale.y = lowHeight * 21
       
       cubeHigh.position.y = highHeight * 20
       cubeHigh.scale.y = highHeight * 20
+      cubeHighGlow.position.y = highHeight * 21
+      cubeHighGlow.scale.y = highHeight * 21
+      
       cubeHigh2.position.y = highHeight * 20
       cubeHigh2.scale.y = highHeight * 20
+      cubeHighGlow2.position.y = highHeight * 21
+      cubeHighGlow2.scale.y = highHeight * 21
+      
       cubeHigh3.position.y = highHeight * 20
       cubeHigh3.scale.y = highHeight * 20
+      cubeHighGlow3.position.y = highHeight * 21
+      cubeHighGlow3.scale.y = highHeight * 21
+      
       if( video.readyState === video.HAVE_ENOUGH_DATA ){
         videoTexture.needsUpdate = true;
         cubeCamera.update(renderer, scene);
@@ -140,6 +247,9 @@ $(function() {
         midHeight = o.mid.val;
         lowHeight = o.low.val;
         highHeight = o.high.val;
+        console.log('low' + ' ' + o.low.val * 100)
+        console.log('mid' + ' ' + o.mid.val * 100)
+        console.log('high' + ' ' + o.high.val * 100)
         /* update the bar heights based on instantaneous values:
         bar1.style.height = o.low.val * 100+"%";
         bar2.style.height = o.mid.val * 100+"%";
