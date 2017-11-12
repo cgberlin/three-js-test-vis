@@ -114,7 +114,8 @@ $(function() {
     customMaterialBlue.uniforms.glowColor.value.setHex(0x0080ff)
     var customMaterialGreen = customMaterial.clone()
     customMaterialGreen.uniforms.glowColor.value.setHex(0x00ff00)
-    
+    var colors = [0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, ]
+  
     var cubeGlow = new THREE.Mesh( geometry, customMaterial.clone() );
     
     cubeGlow.scale.multiplyScalar(1.2);
@@ -247,6 +248,7 @@ $(function() {
         midHeight = o.mid.val;
         lowHeight = o.low.val;
         highHeight = o.high.val;
+        
         console.log('low' + ' ' + o.low.val * 100)
         console.log('mid' + ' ' + o.mid.val * 100)
         console.log('high' + ' ' + o.high.val * 100)
@@ -255,9 +257,23 @@ $(function() {
         bar2.style.height = o.mid.val * 100+"%";
         bar3.style.height = o.high.val * 100+"%";
         
-        // change the hue on each hit:
-        if (o.low.hit) { hue = (hue+100)%360; }
-        
+        */// change the hue on each hit:
+        if (o.low.hit) { 
+          cubeLowGlow.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeLowGlow2.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeLowGlow3.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+        } 
+        if (o.mid.hit) {
+          cubeGlow.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeGlow2.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeGlow3.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+        } 
+        if (o.high.hit) {
+          cubeHighGlow.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeHighGlow2.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+          cubeHighGlow3.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff ) 
+        }
+        /*
         // vary the saturation and lightness based on the avg volume:
         let n = o.all.avg*100;
         
