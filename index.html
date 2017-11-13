@@ -3,6 +3,7 @@
 <head lang="en">
 	<meta charset="UTF-8">
 	<title></title>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 	<script src="js/JustAddMusic.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="js/three.js"></script>
@@ -14,39 +15,40 @@
 			margin:0;
 			background-color: #fff;
 		}
-	
+
 			canvas { width: 100%; height: 100%, background-color: #fff }
 		.jam-drop { border: solid 20px #CF3; background-color: #fff  } /* draw an outline when a file is dragged over the drop target */
 		.jam-ui { font-size: 18px; } /* make the UI text a bit bigger than usual */
-		
+
 	</style>
 </head>
 <body>
-	
+
 </body>
 <script id="vertexShader" type="x-shader/x-vertex">
 		uniform vec3 viewVector;
 		uniform float c;
 		uniform float p;
 		varying float intensity;
-		void main() 
+		void main()
 		{
-		    vec3 vNormal = normalize( normalMatrix * normal );
+		  vec3 vNormal = normalize( normalMatrix * normal );
 			vec3 vNormel = normalize( normalMatrix * viewVector );
 			intensity = pow( c - dot(vNormal, vNormel), p );
-			
+
 		    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 		}
 		</script>
 
 		<!-- fragment shader a.k.a. pixel shader -->
-		<script id="fragmentShader" type="x-shader/x-vertex"> 
+		<script id="fragmentShader" type="x-shader/x-vertex">
 		uniform vec3 glowColor;
 		varying float intensity;
-		void main() 
+		void main()
 		{
 			vec3 glow = glowColor * intensity;
 		    gl_FragColor = vec4( glow, 1.0 );
 		}
 </script>
+
 </html>
