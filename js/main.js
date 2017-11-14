@@ -29,11 +29,11 @@ $(function() {
     videoTexture.minFilter = THREE.LinearFilter;
     var videoMaterial   = new THREE.MeshBasicMaterial( { map : videoTexture } );
     var sphere = new THREE.Mesh(
-      new THREE.SphereGeometry(100, 32, 32),
+      new THREE.SphereGeometry(200, 132, 132),
       videoMaterial
     );
     sphere.scale.x = -1;
-    //scene.add(sphere)
+    scene.add(sphere)
     var near = 1, far = 200, resolution = 1000
     const cubeCamera = new THREE.CubeCamera(near, far, resolution);
     scene.add(cubeCamera);
@@ -201,6 +201,7 @@ $(function() {
 
     //CUBE GRID
 
+
         var geom = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 1 ).normalize();
@@ -208,18 +209,135 @@ $(function() {
         var cubes = new THREE.Object3D();
         scene.add( cubes );
 
-        for (var ix = -20; ix < 20; ix++) {
-          for (var iz = -20; iz < 20; iz++) {
-            let cubeMaterial = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+        for (var ix = -10; ix < 10; ix++) {
+          for (var iz = -10; iz < 10; iz++) {
+            var cubeMaterial1 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
             var grayness = Math.random() * 0.5 + 0.25,
                     mat = new THREE.MeshBasicMaterial(),
-                    cubeGrid = new THREE.Mesh( geom, cubeMaterial );
+                    cubeGrid = new THREE.Mesh( geom, cubeMaterial1 );
 
             cubeGrid.position.x = iz * 5;
             cubeGrid.position.y = ix * 5;
           //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
             cubeGrid.grayness = grayness; // *** NOTE THIS
             cubes.add( cubeGrid );
+          }
+        }
+
+
+        var geom2 = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 1, 1, 1 ).normalize();
+        scene.add(pointLight);
+
+        var cubes2 = new THREE.Object3D();
+        scene.add( cubes2 );
+
+        for (var ix = -20; ix < 0; ix++) {
+          for (var iz = -10; iz < 10; iz++) {
+            var cubeMaterial2 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid2 = new THREE.Mesh( geom2, cubeMaterial2 );
+
+            cubeGrid2.position.x = iz * 5;
+            cubeGrid2.position.z = ix * 5;
+            cubeGrid2.position.y = -50
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid2.grayness = grayness; // *** NOTE THIS
+            cubes2.add( cubeGrid2 );
+          }
+        }
+        var geom3 = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 1, 1, 1 ).normalize();
+        scene.add(pointLight);
+
+        var cubes3 = new THREE.Object3D();
+        scene.add( cubes3 );
+
+        for (var ix = -20; ix < 0; ix++) {
+          for (var iz = -10; iz < 10; iz++) {
+            var cubeMaterial3 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid3 = new THREE.Mesh( geom3, cubeMaterial3 );
+
+            cubeGrid3.position.x = iz * 5;
+            cubeGrid3.position.z = ix * 5;
+            cubeGrid3.position.y = 45
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid3.grayness = grayness; // *** NOTE THIS
+            cubes3.add( cubeGrid3 );
+          }
+        }
+
+        var geom4 = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 0, 1, 1 ).normalize();
+        scene.add(pointLight);
+        var cubes4 = new THREE.Object3D();
+        scene.add( cubes4 );
+
+        for (var ix = -10; ix < 10; ix++) {
+          for (var iz = -10; iz < 10; iz++) {
+            var cubeMaterial4 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid4 = new THREE.Mesh( geom4, cubeMaterial4 );
+
+            cubeGrid4.position.x = iz * 5;
+            cubeGrid4.position.y = ix * 5;
+            cubeGrid4.position.z = -100
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid.grayness = grayness; // *** NOTE THIS
+            cubes4.add( cubeGrid4 );
+          }
+        }
+
+        var geom5 = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 0, 1, 100 ).normalize();
+        scene.add(pointLight);
+        var cubes5 = new THREE.Object3D();
+        scene.add( cubes5 );
+
+        for (var ix = -10; ix < 10; ix++) {
+          for (var iz = -20; iz < 0; iz++) {
+            var cubeMaterial5 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid5 = new THREE.Mesh( geom5, cubeMaterial5 );
+
+            cubeGrid5.position.x = 45;
+            cubeGrid5.position.y = ix * 5;
+            cubeGrid5.position.z = iz * 5
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid5.grayness = grayness; // *** NOTE THIS
+            cubes5.add( cubeGrid5 );
+          }
+        }
+
+        var geom6 = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 0, 1, 1 ).normalize();
+        scene.add(pointLight);
+        var cubes6 = new THREE.Object3D();
+        scene.add( cubes6 );
+
+        for (var ix = -10; ix < 10; ix++) {
+          for (var iz = -20; iz < 0; iz++) {
+            var cubeMaterial6 = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid6 = new THREE.Mesh( geom6, cubeMaterial6 );
+
+            cubeGrid6.position.x = -50;
+            cubeGrid6.position.y = ix * 5;
+            cubeGrid6.position.z = iz * 5
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid6.grayness = grayness; // *** NOTE THIS
+            cubes6.add( cubeGrid6 );
           }
         }
 
@@ -235,7 +353,7 @@ $(function() {
     var controls = new THREE.OrbitControls( camera );
     controls.update();
     controls.minDistance = 10;
-    controls.maxDistance = 80;
+    controls.maxDistance = 800;
 
     function animate() {
     	requestAnimationFrame( animate );
@@ -362,11 +480,197 @@ $(function() {
             }
           }
         }
+        function generateHeights2() {
+          let childrenOfCubes = cubes2.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: (midHeight * -50), z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.y = position.y;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * -50), z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
+        }
+        function generateHeights3() {
+          let childrenOfCubes = cubes3.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 80), z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.y = position.y;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 80), z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
+        }
+        function generateHeights4() {
+          let childrenOfCubes = cubes4.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * -30};
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.z = position.z;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
+        }
+        function generateHeights5() {
+          let childrenOfCubes = cubes5.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : highHeight * 30, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.x = position.x;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
+        }
+        function generateHeights6() {
+          let childrenOfCubes = cubes6.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : midHeight * -30, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.x = position.x;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
+        }
+
+
         generateHeights()
+        generateHeights2()
+        generateHeights3()
+        generateHeights4()
+        generateHeights5()
+        generateHeights6()
 
-
-      //   change the hue on each hit:
         if (o.low.hit) {
+
           let childrenOfCubes = cubes.children
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
             let random = Math.floor(Math.random() * 3) + 1
@@ -391,6 +695,145 @@ $(function() {
                 break
               default:
                 childrenOfCubes[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+          let childrenOfCubes4 = cubes4.children
+          for (let i = 0, theLength = childrenOfCubes4.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes4[i].rotation.z = position.z;
+                  childrenOfCubes4[i].rotation.y = position.y;
+                  childrenOfCubes4[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes4[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+        }
+        if (o.mid.hit) {
+          let childrenOfCubes = cubes2.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].rotation.z = position.z;
+                  childrenOfCubes[i].rotation.y = position.y;
+                  childrenOfCubes[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+          let childrenOfCubes4 = cubes6.children
+          for (let i = 0, theLength = childrenOfCubes4.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes4[i].rotation.z = position.z;
+                  childrenOfCubes4[i].rotation.y = position.y;
+                  childrenOfCubes4[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes4[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+        }
+        if (o.high.hit) {
+          let childrenOfCubes = cubes3.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].rotation.z = position.z;
+                  childrenOfCubes[i].rotation.y = position.y;
+                  childrenOfCubes[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+          let childrenOfCubes4 = cubes5.children
+          for (let i = 0, theLength = childrenOfCubes4.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes4[i].rotation.z = position.z;
+                  childrenOfCubes4[i].rotation.y = position.y;
+                  childrenOfCubes4[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes4[i].material.color.setHex( Math.random() * 0xffffff  );
                 break
             }
           }
