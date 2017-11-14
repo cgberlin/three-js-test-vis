@@ -33,11 +33,13 @@ $(function() {
       videoMaterial
     );
     sphere.scale.x = -1;
-    scene.add(sphere)
+    //scene.add(sphere)
+    var near = 1, far = 200, resolution = 1000
+    const cubeCamera = new THREE.CubeCamera(near, far, resolution);
+    scene.add(cubeCamera);
 
 
-
-    //particles
+    /*particles
     var materialParticle = new THREE.PointCloudMaterial({
       size: 1,
       vertexColors: THREE.VertexColors
@@ -53,12 +55,10 @@ $(function() {
       geometry.colors.push(new THREE.Color(Math.random(), Math.random(), Math.random()));
     });
     var pointCloud = new THREE.PointCloud(geometry, materialParticle);
-    scene.add(pointCloud);
+    //scene.add(pointCloud);
 
     //cubes
-    var near = 1, far = 200, resolution = 1000
-    const cubeCamera = new THREE.CubeCamera(near, far, resolution);
-    scene.add(cubeCamera);
+
     var geometry = new THREE.BoxGeometry( 8, 1, 8 );
     var material = new THREE.MeshPhongMaterial( {
         color: 0xffffff,
@@ -106,6 +106,23 @@ $(function() {
     camera.position.y = 14;
 
 
+
+ */
+ camera.position.z = 40;
+ camera.position.x = 20;
+ camera.position.y = 14;
+
+
+
+
+
+
+
+
+
+
+
+    /*
     var customMaterial = new THREE.ShaderMaterial(
     {
         uniforms:
@@ -180,6 +197,37 @@ $(function() {
     scene.add(cubeHighGlow3)
 
 
+    */
+
+    //CUBE GRID
+
+        var geom = new THREE.CubeGeometry( 5, 5, 5 );
+        var pointLight = new THREE.DirectionalLight( 0xffffff );
+        pointLight.position.set( 0, 1, 1 ).normalize();
+        scene.add(pointLight);
+        var cubes = new THREE.Object3D();
+        scene.add( cubes );
+
+        for (var ix = -20; ix < 20; ix++) {
+          for (var iz = -20; iz < 20; iz++) {
+            let cubeMaterial = new THREE.MeshPhongMaterial( {color: Math.random() * 0xffffff , specular: 0x555555, shininess: 30 } );
+            var grayness = Math.random() * 0.5 + 0.25,
+                    mat = new THREE.MeshBasicMaterial(),
+                    cubeGrid = new THREE.Mesh( geom, cubeMaterial );
+
+            cubeGrid.position.x = iz * 5;
+            cubeGrid.position.y = ix * 5;
+          //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
+            cubeGrid.grayness = grayness; // *** NOTE THIS
+            cubes.add( cubeGrid );
+          }
+        }
+
+
+
+
+
+
     //ambient light
     var light = new THREE.AmbientLight( 0x404040 ); // soft white light
     scene.add( light );
@@ -191,6 +239,7 @@ $(function() {
 
     function animate() {
     	requestAnimationFrame( animate );
+      /*
       cube.position.y = midHeight * 20
       cube.scale.y = midHeight * 20
       cubeGlow.position.y = midHeight * 21
@@ -239,10 +288,10 @@ $(function() {
       pointCloud.position.x = cubeGlow.position.x
       pointCloud.position.y = cubeGlow.position.y
       pointCloud.position.z = cubeGlow.position.z
-      console.log(pointCloud.position)
-    
+    //  console.log(pointCloud.position)
 
-
+     */
+     TWEEN.update();
       if( video.readyState === video.HAVE_ENOUGH_DATA ){
         videoTexture.needsUpdate = true;
         cubeCamera.update(renderer, scene);
@@ -276,17 +325,100 @@ $(function() {
         highHeight = o.high.val;
 
 
-        /* update the bar heights based on instantaneous values:
-        bar1.style.height = o.low.val * 100+"%";
-        bar2.style.height = o.mid.val * 100+"%";
-        bar3.style.height = o.high.val * 100+"%";
 
-        */// change the hue on each hit:
-        if (o.low.hit) {
-          cubeLowGlow.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff )
-          cubeLowGlow2.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff )
-          cubeLowGlow3.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff )
+        function generateHeights() {
+          let childrenOfCubes = cubes.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * 30 };
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].position.z = position.z;
+                });
+              //  childrenOfCubes[i].position.z = lowHeight * 30
+              //  childrenOfCubes[i].scale.z = lowHeight * 30
+                break
+              case 2:
+                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: midHeight * 30 };
+                tween = new TWEEN.Tween(position).to(target, 500);
+              //  childrenOfCubes[i].position.z = midHeight * 30
+              //  childrenOfCubes[i].scale.z = midHeight * 30
+                break
+              case 3:
+              //  childrenOfCubes[i].position.z = highHeight * 30
+                //childrenOfCubes[i].scale.z = highHeight * 30
+                break
+              default:
+                break
+            }
+          }
         }
+        generateHeights()
+
+
+      //   change the hue on each hit:
+        if (o.low.hit) {
+          let childrenOfCubes = cubes.children
+          for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
+            let random = Math.floor(Math.random() * 3) + 1
+            let position = {}
+            let target = {}
+            let tween = new TWEEN.Tween()
+            switch (random) {
+              case 1:
+
+                position = { x : 0, y: 0, z: 0  };
+                target = getRandomTarget()
+
+                tween = new TWEEN.Tween(position).to(target, 500);
+                tween.start();
+                tween.onUpdate(function(){
+
+                  childrenOfCubes[i].rotation.z = position.z;
+                  childrenOfCubes[i].rotation.y = position.y;
+                  childrenOfCubes[i].rotation.x = position.x;
+
+                });
+                break
+              default:
+                childrenOfCubes[i].material.color.setHex( Math.random() * 0xffffff  );
+                break
+            }
+          }
+        }
+
+        function getRandomTarget() {
+          let randomNumber = Math.floor(Math.random() * 3) + 1
+          let target = {}
+          let randomDegree = Math.random() < 0.5 ? -1 : 1;
+          console.log(randomDegree)
+          switch (randomNumber) {
+            case 1:
+                target = { x : 0, y: 0, z: THREE.Math.degToRad( 90 * randomDegree )};
+              break
+            case 2:
+                target = { x : 0, y: THREE.Math.degToRad( 90 * randomDegree ), z: 0};
+              break
+            case 3:
+                target = { x : THREE.Math.degToRad( 90 * randomDegree ), y: 0, z: 0};
+              break;
+            default:
+              break
+          }
+          return target
+        }
+
+
+        /*
         if (o.mid.hit) {
           cubeGlow.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff )
           cubeGlow2.material.uniforms.glowColor.value.setHex(Math.random() * 0xffffff )
