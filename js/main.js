@@ -428,7 +428,7 @@ $(function() {
     // create a new JAM instance:
     var jam = new JustAddMusic({
        // default audio to load:
-      src: "assets/lifelike.mp3",
+      src: "assets/fredv.mp3",
 
       // this fires when the track ends:
       onended: function() { console.log("ended"); },
@@ -490,7 +490,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (midHeight * -50), z: childrenOfCubes[i].position.z};
+                target = { x : childrenOfCubes[i].position.x, y: (midHeight * -30) - 50, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -526,7 +526,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 80), z: childrenOfCubes[i].position.z};
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 30) + 50, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -562,7 +562,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * -30};
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -30) -100};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -598,7 +598,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : highHeight * 30, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                target = { x : (highHeight * 30) + 45, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -634,7 +634,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : midHeight * -30, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                target = { x : (midHeight * -30) -50, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
