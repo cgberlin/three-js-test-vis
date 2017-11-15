@@ -477,7 +477,7 @@ $(function() {
     var jam = new JustAddMusic({
        // default audio to load:
       keyControl:true,
-      src: "assets/lifelike.mp3",
+      src: "assets/jakwob.mp3",
 
       // this fires when the track ends:
       onended: function() { console.log("ended"); },
