@@ -3,9 +3,9 @@ var midHeight = 0;
 var lowHeight = 0;
 var highHeight = 0;
 $(function() {
-
+    var clock = new THREE.Clock();
     var scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xff0000 );
+    scene.background = new THREE.Color( 0x000000 );
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
     var renderer = new THREE.WebGLRenderer();
@@ -13,7 +13,7 @@ $(function() {
     document.body.append(renderer.domElement);
 
 
-    //video
+    /*video
     var video = document.createElement('video');
 
     video.autoplay = true;
@@ -33,11 +33,60 @@ $(function() {
       videoMaterial
     );
     sphere.scale.x = -1;
-    scene.add(sphere)
+    //scene.add(sphere)
     var near = 1, far = 200, resolution = 1000
     const cubeCamera = new THREE.CubeCamera(near, far, resolution);
     scene.add(cubeCamera);
+ */
 
+    //parttttiiiccclllleeessssss
+    var particleTexture = THREE.ImageUtils.loadTexture( 'assets/gold-bubble.png' );
+    var particleTexture2 = THREE.ImageUtils.loadTexture( 'assets/gold-star.png' );
+  	particleGroup = new THREE.Object3D();
+    particleGroup2 = new THREE.Object3D()
+  	particleAttributes = { startSize: [], startPosition: [], randomness: [] };
+    particle2Attributes = { startSize: [], startPosition: [], randomness: [] };
+  	var totalParticles = 200;
+  	var radiusRange = 30;
+  	for( var i = 0; i < totalParticles; i++ )
+  	{
+  	    var spriteMaterial = new THREE.SpriteMaterial( { map: particleTexture, useScreenCoordinates: false, color: 0xffffff } );
+        var spriteMaterial2 = new THREE.SpriteMaterial( { map: particleTexture2, useScreenCoordinates: false, color: 0xffffff } );
+  		var sprite = new THREE.Sprite( spriteMaterial );
+      var sprite2 = new THREE.Sprite( spriteMaterial2 );
+  		sprite.scale.set( 20, 20, 1.0 ); // imageWidth, imageHeight
+  		sprite.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 );
+      sprite2.scale.set( 20, 20, 1.0 ); // imageWidth, imageHeight
+  		sprite2.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 );
+  		// for a cube:
+  		// sprite.position.multiplyScalar( radiusRange );
+  		// for a solid sphere:
+  		// sprite.position.setLength( radiusRange * Math.random() );
+  		// for a spherical shell:
+  		sprite.position.setLength( radiusRange * (Math.random() * 0.1 + 0.9) );
+      sprite2.position.setLength( radiusRange * (Math.random() * 0.1 + 0.9) );
+  		// sprite.color.setRGB( Math.random(),  Math.random(),  Math.random() );
+  		sprite.material.color.setHSL( Math.random(), 0.9, 0.7 );
+      sprite2.material.color.setHSL( Math.random(), 0.9, 0.7 );
+  		// sprite.opacity = 0.80; // translucent particles
+  		sprite.material.blending = THREE.AdditiveBlending; // "glowing" particles
+      sprite2.material.blending = THREE.AdditiveBlending; // "glowing" particles
+  		particleGroup.add( sprite );
+      particleGroup2.add( sprite2 );
+  		// add variable qualities to arrays, if they need to be accessed later
+  		particleAttributes.startPosition.push( sprite.position.clone() );
+  		particleAttributes.randomness.push( Math.random() );
+      particle2Attributes.startPosition.push( sprite2.position.clone() );
+  		particle2Attributes.randomness.push( Math.random() );
+  	}
+  	particleGroup.position.y = 50;
+    particleGroup.position.z = -50
+    particleGroup.position.y = -10
+  	scene.add( particleGroup );
+    particleGroup2.position.y = 50;
+    particleGroup2.position.z = -50
+    particleGroup2.position.y = -10
+  	scene.add( particleGroup2 );
 
     /*particles
     var materialParticle = new THREE.PointCloudMaterial({
@@ -354,81 +403,81 @@ $(function() {
     controls.update();
     controls.minDistance = 10;
     controls.maxDistance = 800;
-
+    var pulseRate = 0.0
     function animate() {
     	requestAnimationFrame( animate );
-      /*
-      cube.position.y = midHeight * 20
-      cube.scale.y = midHeight * 20
-      cubeGlow.position.y = midHeight * 21
-      cubeGlow.scale.y = midHeight * 21
 
-      cube2.position.y = midHeight * 20
-      cube2.scale.y = midHeight * 20
-      cubeGlow2.position.y = midHeight * 21
-      cubeGlow2.scale.y = midHeight * 21
+      var time = 4 * clock.getElapsedTime();
 
-      cube3.position.y = midHeight * 20
-      cube3.scale.y = midHeight * 20
-      cubeGlow3.position.y = midHeight * 21
-      cubeGlow3.scale.y = midHeight * 21
+    	for ( var c = 0; c < particleGroup.children.length; c ++ )
+    	{
+    		var sprite = particleGroup.children[ c ];
 
-      cubeLow.position.y = lowHeight * 20
-      cubeLow.scale.y = lowHeight * 20
-      cubeLowGlow.position.y = lowHeight * 21
-      cubeLowGlow.scale.y = lowHeight * 21
+    		// particle wiggle
+    		// var wiggleScale = 2;
+    		// sprite.position.x += wiggleScale * (Math.random() - 0.5);
+    		// sprite.position.y += wiggleScale * (Math.random() - 0.5);
+    		// sprite.position.z += wiggleScale * (Math.random() - 0.5);
 
-      cubeLow2.position.y = lowHeight * 20
-      cubeLow2.scale.y = lowHeight * 20
-      cubeLowGlow2.position.y = lowHeight * 21
-      cubeLowGlow2.scale.y = lowHeight * 21
+    		// pulse away/towards center
+    		// individual rates of movement
+    		var a = particleAttributes.randomness[c] + 1;
+    		var pulseFactor = Math.sin(a * time) * 0.1 + pulseRate;
+    	//	sprite.position.x = particleAttributes.startPosition[c].x * pulseFactor;
+    	//	sprite.position.y = particleAttributes.startPosition[c].y * pulseFactor;
+    	//	sprite.position.z = particleAttributes.startPosition[c].z * pulseFactor;
+    	}
 
-      cubeLow3.position.y = lowHeight * 20
-      cubeLow3.scale.y = lowHeight * 20
-      cubeLowGlow3.position.y = lowHeight * 21
-      cubeLowGlow3.scale.y = lowHeight * 21
 
-      cubeHigh.position.y = highHeight * 20
-      cubeHigh.scale.y = highHeight * 20
-      cubeHighGlow.position.y = highHeight * 21
-      cubeHighGlow.scale.y = highHeight * 21
+          	for ( var c = 0; c < particleGroup2.children.length; c ++ )
+          	{
+          		var sprite2 = particleGroup2.children[ c ];
 
-      cubeHigh2.position.y = highHeight * 20
-      cubeHigh2.scale.y = highHeight * 20
-      cubeHighGlow2.position.y = highHeight * 21
-      cubeHighGlow2.scale.y = highHeight * 21
+          		// particle wiggle
+          		// var wiggleScale = 2;
+          		// sprite.position.x += wiggleScale * (Math.random() - 0.5);
+          		// sprite.position.y += wiggleScale * (Math.random() - 0.5);
+          		// sprite.position.z += wiggleScale * (Math.random() - 0.5);
 
-      cubeHigh3.position.y = highHeight * 20
-      cubeHigh3.scale.y = highHeight * 20
-      cubeHighGlow3.position.y = highHeight * 21
-      cubeHighGlow3.scale.y = highHeight * 21
+          		// pulse away/towards center
+          		// individual rates of movement
+          		var a = particle2Attributes.randomness[c] + 1;
+          		var pulseFactor = Math.sin(a * time) * 0.1 + pulseRate / 2.0;
+          		sprite2.position.x = particle2Attributes.startPosition[c].x * pulseFactor;
+          		sprite2.position.y = particle2Attributes.startPosition[c].y * pulseFactor;
+          		sprite2.position.z = particle2Attributes.startPosition[c].z * pulseFactor;
+          	}
 
-      pointCloud.position.x = cubeGlow.position.x
-      pointCloud.position.y = cubeGlow.position.y
-      pointCloud.position.z = cubeGlow.position.z
-    //  console.log(pointCloud.position)
 
-     */
-     TWEEN.update();
-      if( video.readyState === video.HAVE_ENOUGH_DATA ){
-        videoTexture.needsUpdate = true;
-        cubeCamera.update(renderer, scene);
+    	// rotate the entire group
+    	// particleGroup.rotation.x = time * 0.5;
+    	particleGroup.rotation.y = time * 0.75;
+      particleGroup2.rotation.y = time * -0.75;
+    	// particleGroup.rotation.z = time * 1.0;
+
+       TWEEN.update();
+       /*
+        if( video.readyState === video.HAVE_ENOUGH_DATA ){
+          videoTexture.needsUpdate = true;
+          cubeCamera.update(renderer, scene);
+        }*/
+      	renderer.render( scene, camera );
       }
-    	renderer.render( scene, camera );
-    }
+
     function render(){
-      window.requestAnimationFrame(render);
+        window.requestAnimationFrame(render);
 
 
 
-      renderer.render(scene, camera);
-    }
+        renderer.render(scene, camera);
+      }
     animate();
 
     // create a new JAM instance:
     var jam = new JustAddMusic({
        // default audio to load:
-      src: "assets/fredv.mp3",
+      keyControl:true,
+      src: "assets/lifelike.mp3",
 
       // this fires when the track ends:
       onended: function() { console.log("ended"); },
@@ -441,7 +490,7 @@ $(function() {
         midHeight = o.mid.val;
         lowHeight = o.low.val;
         highHeight = o.high.val;
-
+        pulseRate = (midHeight + lowHeight + highHeight) / 1.8
 
 
         function generateHeights() {
@@ -843,7 +892,7 @@ $(function() {
           let randomNumber = Math.floor(Math.random() * 3) + 1
           let target = {}
           let randomDegree = Math.random() < 0.5 ? -1 : 1;
-          console.log(randomDegree)
+        //  console.log(randomDegree)
           switch (randomNumber) {
             case 1:
                 target = { x : 0, y: 0, z: THREE.Math.degToRad( 90 * randomDegree )};
