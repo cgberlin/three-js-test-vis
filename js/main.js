@@ -88,75 +88,86 @@ $(function() {
     particleGroup2.position.y = -10
   	scene.add( particleGroup2 );
 
-    /*particles
-    var materialParticle = new THREE.PointCloudMaterial({
-      size: 1,
-      vertexColors: THREE.VertexColors
-    });
-    var geometry = new THREE.Geometry();
-    var x, y, z;
-    _.times(3000, function(n){
-      x = (Math.random() * 500) - 400;
-      y = (Math.random() * 500) - 400;
-      z = (Math.random() * 500) - 400;
+    function createParticleSystem() {
 
-      geometry.vertices.push(new THREE.Vector3(x, y, z));
-      geometry.colors.push(new THREE.Color(Math.random(), Math.random(), Math.random()));
-    });
-    var pointCloud = new THREE.PointCloud(geometry, materialParticle);
-    //scene.add(pointCloud);
+        // The number of particles in a particle system is not easily changed.
+        var particleCount = 10000;
 
-    //cubes
+        // Particles are just individual vertices in a geometry
+        // Create the geometry that will hold all of the vertices
+        var particles = new THREE.Geometry();
 
-    var geometry = new THREE.BoxGeometry( 8, 1, 8 );
-    var material = new THREE.MeshPhongMaterial( {
-        color: 0xffffff,
+        // Create the vertices and add them to the particles geometry
+        for (var p = 0; p < particleCount; p++) {
 
-        envMap: cubeCamera.renderTarget.texture,
+            // This will create all the vertices in a range of -200 to 200 in all directions
+            var x = Math.random() * 1000 - 500;
+            var y = Math.random() * 1000 - 500;
+            var z = Math.random() * 1000 - 500;
 
+            // Create the vertex
+            var particle = new THREE.Vector3(x, y, z);
 
-        reflectivity: 1.0
-    } );
+            // Add the vertex to the geometry
+            particles.vertices.push(particle);
+        }
 
-    var cube = new THREE.Mesh( geometry, material );
-    var cube2 = new THREE.Mesh( geometry, material );
-    var cube3 = new THREE.Mesh( geometry, material );
-    var cubeLow = new THREE.Mesh( geometry, material );
-    var cubeLow2 = new THREE.Mesh( geometry, material );
-    var cubeLow3 = new THREE.Mesh( geometry, material );
-    var cubeHigh = new THREE.Mesh( geometry, material );
-    var cubeHigh2 = new THREE.Mesh( geometry, material );
-    var cubeHigh3 = new THREE.Mesh( geometry, material );
+        // Create the material that will be used to render each vertex of the geometry
+        var particleMaterial = new THREE.PointsMaterial(
+                {color: 0xffffff,
+                 size: 4,
+                 map: THREE.ImageUtils.loadTexture("assets/gold-star.png"),
+                 blending: THREE.AdditiveBlending,
+                 transparent: true,
+                });
 
+        // Create the particle system
+        particleSystem = new THREE.Points(particles, particleMaterial);
 
-    scene.add( cube );
-    scene.add( cube2 );
-    scene.add( cube3 );
-    scene.add( cubeLow );
-    scene.add( cubeLow2 );
-    scene.add( cubeLow3 );
-    scene.add( cubeHigh );
-    scene.add( cubeHigh2 );
-    scene.add( cubeHigh3 );
-    cubeLow.position.x -= 10
-    cubeLow2.position.x -= 10
-    cubeLow3.position.x -= 10
-    cube2.position.z -= 10
-    cube3.position.z -= 20
-    cubeLow2.position.z -= 10
-    cubeLow3.position.z -= 20
-    cubeHigh2.position.z -= 10
-    cubeHigh3.position.z -= 20
-    cubeHigh.position.x += 10
-    cubeHigh2.position.x += 10
-    cubeHigh3.position.x += 10
-    camera.position.z = 40;
-    camera.position.x = 20;
-    camera.position.y = 14;
+        return particleSystem;
+    }
+    particleSystem = createParticleSystem();
+    scene.add(particleSystem);
+    function createParticleSystem2() {
 
+        // The number of particles in a particle system is not easily changed.
+        var particleCount = 1000;
 
+        // Particles are just individual vertices in a geometry
+        // Create the geometry that will hold all of the vertices
+        var particles = new THREE.Geometry();
 
- */
+        // Create the vertices and add them to the particles geometry
+        for (var p = 0; p < particleCount; p++) {
+
+            // This will create all the vertices in a range of -200 to 200 in all directions
+            var x = Math.random() * 1000 - 500;
+            var y = Math.random() * 1000 - 500;
+            var z = Math.random() * 1000 - 500;
+
+            // Create the vertex
+            var particle = new THREE.Vector3(x, y, z);
+
+            // Add the vertex to the geometry
+            particles.vertices.push(particle);
+        }
+
+        // Create the material that will be used to render each vertex of the geometry
+        var particleMaterial = new THREE.PointsMaterial(
+                {color: 0xffffff,
+                 size: 4,
+                 map: THREE.ImageUtils.loadTexture("assets/green-spash.png"),
+                 blending: THREE.AdditiveBlending,
+                 transparent: true,
+                });
+
+        // Create the particle system
+        particleSystem = new THREE.Points(particles, particleMaterial);
+
+        return particleSystem;
+    }
+    particleSystem2 = createParticleSystem2();
+    scene.add(particleSystem2);
  camera.position.z = 40;
  camera.position.x = 20;
  camera.position.y = 14;
@@ -171,82 +182,7 @@ $(function() {
 
 
 
-    /*
-    var customMaterial = new THREE.ShaderMaterial(
-    {
-        uniforms:
-      {
-        "c":   { type: "f", value: 1.0 },
-        "p":   { type: "f", value: 1.4 },
-        glowColor: { type: "c", value: new THREE.Color(0xffff00) },
-        viewVector: { type: "v3", value: camera.position }
-      },
-      vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
-      fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-      side: THREE.FrontSide,
-      blending: THREE.AdditiveBlending,
-      transparent: true
-    }   );
 
-    var customMaterialBlue = customMaterial.clone()
-    customMaterialBlue.uniforms.glowColor.value.setHex(0x0080ff)
-    var customMaterialGreen = customMaterial.clone()
-    customMaterialGreen.uniforms.glowColor.value.setHex(0x00ff00)
-    var colors = [0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, 0xffffff, ]
-
-    var cubeGlow = new THREE.Mesh( geometry, customMaterial.clone() );
-
-    cubeGlow.scale.multiplyScalar(1.2);
-    scene.add( cubeGlow );
-    var cubeGlow2 = new THREE.Mesh( geometry, customMaterial.clone() );
-
-    cubeGlow2.position.z -= 10
-    cubeGlow2.scale.multiplyScalar(1.2);
-    scene.add(cubeGlow2)
-    var cubeGlow3 = new THREE.Mesh( geometry, customMaterial.clone() );
-
-    cubeGlow3.position.z -= 20
-    cubeGlow3.scale.multiplyScalar(1.2);
-    scene.add(cubeGlow3)
-
-    var cubeLowGlow = new THREE.Mesh( geometry, customMaterialBlue.clone() );
-
-    cubeLowGlow.position.x -= 10
-    cubeLowGlow.scale.multiplyScalar(1.2);
-    scene.add( cubeLowGlow );
-    var cubeLowGlow2 = new THREE.Mesh( geometry, customMaterialBlue.clone() );
-
-    cubeLowGlow2.position.z -= 10
-    cubeLowGlow2.position.x -= 10
-    cubeLowGlow2.scale.multiplyScalar(1.2);
-    scene.add(cubeLowGlow2)
-    var cubeLowGlow3 = new THREE.Mesh( geometry, customMaterialBlue.clone() );
-
-    cubeLowGlow3.position.z -= 20
-    cubeLowGlow3.position.x -= 10
-    cubeLowGlow3.scale.multiplyScalar(1.2);
-    scene.add(cubeLowGlow3)
-
-    var cubeHighGlow = new THREE.Mesh( geometry, customMaterialGreen.clone() );
-
-    cubeHighGlow.position.x += 10
-    cubeHighGlow.scale.multiplyScalar(1.2);
-    scene.add( cubeHighGlow );
-    var cubeHighGlow2 = new THREE.Mesh( geometry, customMaterialGreen.clone() );
-
-    cubeHighGlow2.position.z -= 10
-    cubeHighGlow2.position.x += 10
-    cubeHighGlow2.scale.multiplyScalar(1.2);
-    scene.add(cubeHighGlow2)
-    var cubeHighGlow3 = new THREE.Mesh( geometry, customMaterialGreen.clone() );
-
-    cubeHighGlow3.position.z -= 20
-    cubeHighGlow3.position.x += 10
-    cubeHighGlow3.scale.multiplyScalar(1.2);
-    scene.add(cubeHighGlow3)
-
-
-    */
 
     //CUBE GRID
 
@@ -254,7 +190,7 @@ $(function() {
         var geom = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 1 ).normalize();
-        scene.add(pointLight);
+      //  scene.add(pointLight);
         var cubes = new THREE.Object3D();
         scene.add( cubes );
 
@@ -277,7 +213,7 @@ $(function() {
         var geom2 = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 1, 1, 1 ).normalize();
-        scene.add(pointLight);
+      //  scene.add(pointLight);
 
         var cubes2 = new THREE.Object3D();
         scene.add( cubes2 );
@@ -299,7 +235,7 @@ $(function() {
         }
         var geom3 = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
-        pointLight.position.set( 1, 1, 1 ).normalize();
+        pointLight.position.set( 1, 1, 100 ).normalize();
         scene.add(pointLight);
 
         var cubes3 = new THREE.Object3D();
@@ -314,7 +250,7 @@ $(function() {
 
             cubeGrid3.position.x = iz * 5;
             cubeGrid3.position.z = ix * 5;
-            cubeGrid3.position.y = 45
+            cubeGrid3.position.y = 40
           //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
             cubeGrid3.grayness = grayness; // *** NOTE THIS
             cubes3.add( cubeGrid3 );
@@ -324,7 +260,7 @@ $(function() {
         var geom4 = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 1 ).normalize();
-        scene.add(pointLight);
+    //    scene.add(pointLight);
         var cubes4 = new THREE.Object3D();
         scene.add( cubes4 );
 
@@ -347,7 +283,7 @@ $(function() {
         var geom5 = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 100 ).normalize();
-        scene.add(pointLight);
+      //  scene.add(pointLight);
         var cubes5 = new THREE.Object3D();
         scene.add( cubes5 );
 
@@ -370,7 +306,7 @@ $(function() {
         var geom6 = new THREE.CubeGeometry( 5, 5, 5 );
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 1 ).normalize();
-        scene.add(pointLight);
+    //    scene.add(pointLight);
         var cubes6 = new THREE.Object3D();
         scene.add( cubes6 );
 
@@ -396,7 +332,7 @@ $(function() {
 
 
     //ambient light
-    var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    var light = new THREE.AmbientLight( 0xffffff ); // soft white light
     scene.add( light );
 
     var controls = new THREE.OrbitControls( camera );
@@ -503,7 +439,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * 30 };
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * 50 };
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -514,11 +450,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: midHeight * 30 };
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
@@ -539,7 +471,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (midHeight * -30) - 50, z: childrenOfCubes[i].position.z};
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * -50) - 50, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -550,11 +482,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (highHeight * -50), z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
@@ -575,7 +503,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 30) + 50, z: childrenOfCubes[i].position.z};
+                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 50) + 50, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -586,11 +514,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: (highHeight * 80), z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
@@ -611,7 +535,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -30) -100};
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -50) -100};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -622,11 +546,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
@@ -647,7 +567,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : (highHeight * 30) + 45, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                target = { x : (midHeight * 50) + 45, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -658,11 +578,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
@@ -683,7 +599,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : (midHeight * -30) -50, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
+                target = { x : (midHeight * -50) -50, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
                 tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
@@ -694,11 +610,7 @@ $(function() {
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
               case 2:
-                position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y , z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z:  midHeight * -30};
-                tween = new TWEEN.Tween(position).to(target, 500);
-              //  childrenOfCubes[i].position.z = midHeight * 30
-              //  childrenOfCubes[i].scale.z = midHeight * 30
+
                 break
               case 3:
               //  childrenOfCubes[i].position.z = highHeight * 30
