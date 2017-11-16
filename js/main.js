@@ -644,7 +644,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -671,7 +671,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -700,7 +700,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -727,7 +727,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -756,7 +756,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -783,7 +783,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
