@@ -3,6 +3,31 @@ var midHeight = 0;
 var lowHeight = 0;
 var highHeight = 0;
 $(function() {
+
+
+  $('#instructions').on('click', function() {
+    console.log('clickkkk')
+    $('.ui.basic.modal')
+      .modal('show')
+    ;
+  })
+  $('#closeInstructions').on('click', function() {
+    console.log('clickkkk')
+    $('.ui.basic.modal')
+      .modal('hide')
+    ;
+  })
+
+
+
+
+
+
+
+
+
+    /////////////////////////////////////THREEJS SPAGHETTI C0DE
+
     var clock = new THREE.Clock();
     var scene = new THREE.Scene();
     scene.background = new THREE.Color( 0x000000 );
@@ -261,6 +286,11 @@ $(function() {
         var pointLight = new THREE.DirectionalLight( 0xffffff );
         pointLight.position.set( 0, 1, 1 ).normalize();
     //    scene.add(pointLight);
+
+
+
+
+
         var cubes4 = new THREE.Object3D();
         scene.add( cubes4 );
 
@@ -387,8 +417,8 @@ $(function() {
 
     	// rotate the entire group
     	// particleGroup.rotation.x = time * 0.5;
-    	particleGroup.rotation.y = time * 0.75;
-      particleGroup2.rotation.y = time * -0.75;
+    	particleGroup.rotation.y = time * 0.45;
+      particleGroup2.rotation.y = time * -0.45;
     	// particleGroup.rotation.z = time * 1.0;
 
        TWEEN.update();
@@ -413,7 +443,7 @@ $(function() {
     var jam = new JustAddMusic({
        // default audio to load:
       keyControl:true,
-      src: "assets/jakwob.mp3",
+      src: "assets/dont.mp3",
 
       // this fires when the track ends:
       onended: function() { console.log("ended"); },
@@ -432,7 +462,7 @@ $(function() {
         function generateHeights() {
           let childrenOfCubes = cubes.children
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
-            let random = Math.floor(Math.random() * 3) + 1
+            let random = Math.floor(Math.random() * 10) + 1
             let position = {}
             let target = {}
             let tween = new TWEEN.Tween()
@@ -440,7 +470,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: lowHeight * 50 };
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -472,7 +502,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : childrenOfCubes[i].position.x, y: (highHeight * -50) - 50, z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -504,7 +534,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : childrenOfCubes[i].position.x, y: (highHeight * 50) + 50, z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -536,7 +566,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -50) -100};
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -568,7 +598,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : (midHeight * 50) + 45, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -600,7 +630,7 @@ $(function() {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
                 target = { x : (midHeight * -50) -50, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z};
-                tween = new TWEEN.Tween(position).to(target, 500);
+                tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -644,7 +674,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -671,7 +701,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -700,7 +730,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -727,7 +757,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -756,7 +786,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 
@@ -783,7 +813,7 @@ $(function() {
                 position = { x : 0, y: 0, z: 0  };
                 target = getRandomTarget()
 
-                tween = new TWEEN.Tween(position).to(target, 300);
+                tween = new TWEEN.Tween(position).to(target, 500);
                 tween.start();
                 tween.onUpdate(function(){
 

@@ -3,7 +3,9 @@
 <head lang="en">
 	<meta charset="UTF-8">
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	<script type='text/javascript' src='js/tween.js-master/src/Tween.js'></script>
 	<script src="js/JustAddMusic.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -11,26 +13,73 @@
 	<script src="js/physi.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/OrbitControls.js"></script>
+	<script src="semantic/semantic.min.js"></script>
 	<style type="text/css">
 		body {
 			margin:0;
 			background-color: #fff;
+			font-family: 'Raleway', sans-serif;
 		}
 
 			canvas { width: 100%; height: 100%, background-color: #fff }
-		.jam-drop { border: solid 20px #CF3; background-color: #fff  } /* draw an outline when a file is dragged over the drop target */
+		.jam-drop { border: solid 1px #CF3; background-color: #fff  } /* draw an outline when a file is dragged over the drop target */
 		.jam-ui { font-size: 18px; } /* make the UI text a bit bigger than usual */
 		#instructions {
 			position: absolute;
-			top: 0;
+			top: 1rem;
 			font-size: 2rem;
 			color: #fff;
 			left: 1rem;
 		}
+		.main-font, .sub-font {
+			font-family: 'Raleway', sans-serif !important;
+			text-align: center;
+		}
+		.main-font {
+			font-size: 2rem;
+		}
+		.sub-font {
+			font-size: 1.5rem;
+		}
+		.title {
+			text-align: center;
+			font-size: 5rem;
+		}
+		.ui.icon.header .icon {
+			font-size: 10rem;
+		}
+		#closeInstructions {
+			margin: 0 auto;
+		}
+		#modalContainer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
 	</style>
 </head>
 <body>
-	<h1 id = "instructions">Drag a song (mp3) anywhere to load and play. </br> Controls (temp): </br> spacebar to pause/play</br> up/down arrows for volume</br>left/right arrows to seek</h1>
+	<button id = "instructions" class="ui primary button">
+		<i class="puzzle icon"></i>
+		Instructions
+	</button>
+	<div class="ui basic modal">
+  <div class="ui icon header">
+    <i class="sound icon"></i>
+    <h1 class = "title">Controls</title>
+  </div>
+  <div id = "modalContainer" class="content">
+		<p class = 'main-font controls-subhead'>Drag an audio file anywhere on the page to load and play</p>
+    <p class = 'main-font controls-subhead'>Playback can be controlled with both the keyboard and player controls</p>
+		<p class = 'sub-font controls-subhead'>Volume: Up/Down arrow keys</p>
+		<p class = 'sub-font controls-subhead'>Seek: Left/Right arrow keys</p>
+		<p class = 'sub-font controls-subhead'>Pause: Space bar</p>
+		<button id = "closeInstructions" class="ui primary button">
+		  Got it
+		</button>
+  </div>
+</div>
 </body>
 
 
