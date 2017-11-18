@@ -2,6 +2,7 @@ var hue = 60;
 var midHeight = 0;
 var lowHeight = 0;
 var highHeight = 0;
+var paused = false
 $(function() {
 
 
@@ -16,6 +17,52 @@ $(function() {
     $('.ui.basic.modal')
       .modal('hide')
     ;
+  })
+
+  $('#playButton').on('click', function() {
+    if (jam) {
+      jam.play()
+      $('#fullPageCover').fadeOut( "slow", function() {
+          // Animation complete.
+        });
+    } else {
+      alert('Please wait for preload')
+    }
+  })
+
+  $('.ui.range').range({
+    min: 0,
+    max: 10,
+    start: 10,
+    step: 1,
+    onChange: function(value) {
+      if (jam) {
+          jam.volume = value / 10
+      }
+    }
+  });
+  $('#rewind').on('click', function() {
+    if (jam) {
+      jam.skip(-10)
+    }
+  })
+  $('#pausePlay').on('click', function() {
+    if (jam) {
+      if (paused) {
+        jam.play()
+        $(this).attr('src', 'assets/pause-button.png')
+        paused = false
+      } else {
+        jam.pause()
+        $(this).attr('src', 'assets/play-button-small.png')
+        paused = true
+      }
+    }
+  })
+  $('#forward').on('click', function() {
+    if (jam) {
+      jam.skip(10)
+    }
   })
 
 
@@ -113,10 +160,12 @@ $(function() {
     particleGroup2.position.y = -10
   	scene.add( particleGroup2 );
 
+    var yellowParticles;
+    var greenParticles;
     function createParticleSystem() {
 
         // The number of particles in a particle system is not easily changed.
-        var particleCount = 10000;
+        var particleCount = 7000;
 
         // Particles are just individual vertices in a geometry
         // Create the geometry that will hold all of the vertices
@@ -148,7 +197,7 @@ $(function() {
 
         // Create the particle system
         particleSystem = new THREE.Points(particles, particleMaterial);
-
+        yellowParticles = particles
         return particleSystem;
     }
     particleSystem = createParticleSystem();
@@ -156,7 +205,7 @@ $(function() {
     function createParticleSystem2() {
 
         // The number of particles in a particle system is not easily changed.
-        var particleCount = 1000;
+        var particleCount = 50;
 
         // Particles are just individual vertices in a geometry
         // Create the geometry that will hold all of the vertices
@@ -166,9 +215,9 @@ $(function() {
         for (var p = 0; p < particleCount; p++) {
 
             // This will create all the vertices in a range of -200 to 200 in all directions
-            var x = Math.random() * 1000 - 500;
-            var y = Math.random() * 1000 - 500;
-            var z = Math.random() * 1000 - 500;
+            var x = Math.random() * 800 - 500;
+            var y = Math.random() * 800 - 500;
+            var z = Math.random() * 800 - 500;
 
             // Create the vertex
             var particle = new THREE.Vector3(x, y, z);
@@ -188,25 +237,14 @@ $(function() {
 
         // Create the particle system
         particleSystem = new THREE.Points(particles, particleMaterial);
-
+        greenParticles = particles
         return particleSystem;
     }
     particleSystem2 = createParticleSystem2();
     scene.add(particleSystem2);
- camera.position.z = 40;
- camera.position.x = 20;
+ camera.position.z = 100;
+ camera.position.x = 0;
  camera.position.y = 14;
-
-
-
-
-
-
-
-
-
-
-
 
 
     //CUBE GRID
@@ -228,6 +266,7 @@ $(function() {
 
             cubeGrid.position.x = iz * 5;
             cubeGrid.position.y = ix * 5;
+
           //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
             cubeGrid.grayness = grayness; // *** NOTE THIS
             cubes.add( cubeGrid );
@@ -275,7 +314,7 @@ $(function() {
 
             cubeGrid3.position.x = iz * 5;
             cubeGrid3.position.z = ix * 5;
-            cubeGrid3.position.y = 40
+            cubeGrid3.position.y = 45
           //  cube.rotation.set( Math.random(), Math.random(), Math.random() )
             cubeGrid3.grayness = grayness; // *** NOTE THIS
             cubes3.add( cubeGrid3 );
@@ -358,7 +397,115 @@ $(function() {
 
 
 
+    //////////////////////PLANETSSSSS
+    //////Sun////////
+    var objects = []
+    var geoSphere = new THREE.SphereGeometry(Math.random() * 1, 20, 20);
+    var pinkMat = new THREE.MeshPhongMaterial({
+        color: 0xF66120,
+        emissive: 0xF66120,
+        specular: 0xFFED22,
+        shininess: 10,
+        flatShading: true,
+        transparent: 1,
+        opacity: 1
+    });
+    var pinkMat2 = new THREE.MeshPhongMaterial({
+        color: 0xF66120,
+        emissive: 0xF66120,
+       specular: 0xFFED22,
+        shininess: 10,
+        flatShading: true,
+        transparent: 1,
+        opacity: 1
+    });
 
+
+    var geometry = new THREE.IcosahedronGeometry(3, 1);
+    var geometry2 = new THREE.IcosahedronGeometry(2.5, 1);
+    var geometry4 = new THREE.IcosahedronGeometry(3, 1);
+    // material
+    var material = new THREE.MeshPhongMaterial({
+        color: 0xffc12d,
+        emissive: 0xffc12d,
+        flatShading: true,
+    });
+    var material2 = new THREE.MeshPhongMaterial({
+        color: 0x26D7E7,
+        emissive: 0x26D7E7,
+        flatShading: true,
+    });
+    var material4 = new THREE.MeshPhongMaterial({
+        color: 0xacacac,
+        emissive: 0xacacac,
+        flatShading: true,
+    });
+
+    sun = new THREE.Mesh(new THREE.IcosahedronGeometry(0, 0), pinkMat);
+
+    scene.add(sun);
+    objects.push(sun);
+    sun2 = new THREE.Mesh(new THREE.IcosahedronGeometry(0, 0), pinkMat2);
+    sun2.rotation.x = 1;
+    scene.add(sun2);
+    objects.push(sun2);
+    sun3 = new THREE.Mesh(new THREE.IcosahedronGeometry(0, 0), pinkMat2);
+    sun3.rotation.x = 1;
+    scene.add(sun2);
+    objects.push(sun3);
+
+    earthPivot3 = new THREE.Object3D();
+    sun.add(earthPivot3);
+
+    var radius = 1000;
+    var tubeRadius = 0.03;
+    var radialSegments = 8 * 10;
+    var tubularSegments = 6 * 15;
+    var arc = Math.PI * 2;
+    var sunObjects = []
+    var earthObjects = []
+    var blueObjects = []
+    var geometry3 = new THREE.TorusGeometry(radius, tubeRadius, radialSegments, tubularSegments, arc);
+    var material3 = new THREE.MeshLambertMaterial({
+        color: 0xffffff,
+        emissive: 0xffffff,
+        flatShading: true,
+    });
+    for (let i = 0; i < 10; i++) {
+      let sunClone = new THREE.Mesh(new THREE.IcosahedronGeometry(10, 1), pinkMat);
+      sunClone.position.x = Math.random() * 1000 - 500
+      sunClone.position.y = Math.random() * 1000 - 500
+      sunClone.position.z = Math.random() * 1000 - 500
+
+      sunObjects.push(sunClone)
+      earthPivot3.add(sunClone)
+    }
+    /// planet blue ///
+    earthPivot = new THREE.Object3D();
+    sun.add(earthPivot);
+    ///// planet green ////
+    earthPivot2 = new THREE.Object3D();
+    sun.add(earthPivot2);
+    for (let i = 0; i < 10; i++) {
+      let earth2Clone = new THREE.Mesh(geometry2, material2);;
+      earth2Clone.position.x = Math.random() * 1000 - 500
+      earth2Clone.position.y = Math.random() * 1000 - 500
+      earth2Clone.position.z = Math.random() * 1000 - 500
+      earthObjects.push(earth2Clone)
+      earthPivot2.add(earth2Clone)
+    }
+    ////planet violet ///
+    earthPivot4 = new THREE.Object3D();
+    sun.add(earthPivot4);
+    var earth3 = new THREE.Mesh(geometry4, material4);
+    for (let i = 0; i < 10; i++) {
+      let earth2Clone = new THREE.Mesh(geometry4, material4);
+      earth2Clone.position.x = Math.random() * 1000 - 500
+      earth2Clone.position.y = Math.random() * 1000 - 500
+      earth2Clone.position.z = Math.random() * 1000 - 500
+      blueObjects.push(earth2Clone)
+      earthPivot4.add(earth2Clone)
+    }
 
 
     //ambient light
@@ -368,10 +515,26 @@ $(function() {
     var controls = new THREE.OrbitControls( camera );
     controls.update();
     controls.minDistance = 10;
-    controls.maxDistance = 800;
+    controls.maxDistance = 300;
+    controls.target.set( 0, 0, 0 );
     var pulseRate = 0.0
     function animate() {
     	requestAnimationFrame( animate );
+
+      var timer = 0.00001 * Date.now();
+      for (let i = 0, theLength = objects.length; i < theLength; i++) {
+        objects[i].rotation.z += 0.008
+      }
+      sun.rotation.x += 0.008;
+      sun2.rotation.y += 0.008;
+      sun3.rotation.z += 0.008;
+      earthPivot.rotation.z += 0.006;
+      earthPivot2.rotation.z += 0.01;
+      earthPivot3.rotation.y += 0.007;
+      earthPivot4.rotation.z+=0.008;
+
+
+
 
       var time = 4 * clock.getElapsedTime();
 
@@ -379,19 +542,9 @@ $(function() {
     	{
     		var sprite = particleGroup.children[ c ];
 
-    		// particle wiggle
-    		// var wiggleScale = 2;
-    		// sprite.position.x += wiggleScale * (Math.random() - 0.5);
-    		// sprite.position.y += wiggleScale * (Math.random() - 0.5);
-    		// sprite.position.z += wiggleScale * (Math.random() - 0.5);
-
-    		// pulse away/towards center
-    		// individual rates of movement
     		var a = particleAttributes.randomness[c] + 1;
     		var pulseFactor = Math.sin(a * time) * 0.1 + pulseRate;
-    	//	sprite.position.x = particleAttributes.startPosition[c].x * pulseFactor;
-    	//	sprite.position.y = particleAttributes.startPosition[c].y * pulseFactor;
-    	//	sprite.position.z = particleAttributes.startPosition[c].z * pulseFactor;
+
     	}
 
 
@@ -399,14 +552,6 @@ $(function() {
           	{
           		var sprite2 = particleGroup2.children[ c ];
 
-          		// particle wiggle
-          		// var wiggleScale = 2;
-          		// sprite.position.x += wiggleScale * (Math.random() - 0.5);
-          		// sprite.position.y += wiggleScale * (Math.random() - 0.5);
-          		// sprite.position.z += wiggleScale * (Math.random() - 0.5);
-
-          		// pulse away/towards center
-          		// individual rates of movement
           		var a = particle2Attributes.randomness[c] + 1;
           		var pulseFactor = Math.sin(a * time) * 0.1 + pulseRate / 2.0;
           		sprite2.position.x = particle2Attributes.startPosition[c].x * pulseFactor;
@@ -422,11 +567,7 @@ $(function() {
     	// particleGroup.rotation.z = time * 1.0;
 
        TWEEN.update();
-       /*
-        if( video.readyState === video.HAVE_ENOUGH_DATA ){
-          videoTexture.needsUpdate = true;
-          cubeCamera.update(renderer, scene);
-        }*/
+
       	renderer.render( scene, camera );
       }
 
@@ -437,14 +578,21 @@ $(function() {
 
         renderer.render(scene, camera);
       }
+
+      function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          render();
+      }
     animate();
 
     // create a new JAM instance:
     var jam = new JustAddMusic({
        // default audio to load:
       keyControl:true,
-      src: "assets/dont.mp3",
-
+      src: "assets/jakwob.mp3",
+      paused: true,
       // this fires when the track ends:
       onended: function() { console.log("ended"); },
 
@@ -462,7 +610,7 @@ $(function() {
         function generateHeights() {
           let childrenOfCubes = cubes.children
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
-            let random = Math.floor(Math.random() * 10) + 1
+            let random = Math.floor(Math.random() * 3) + 1
             let position = {}
             let target = {}
             let tween = new TWEEN.Tween()
@@ -479,13 +627,7 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
 
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -511,13 +653,7 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
 
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -543,13 +679,6 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
-
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -565,7 +694,7 @@ $(function() {
             switch (random) {
               case 1:
                 position = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: childrenOfCubes[i].position.z  };
-                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -50) -100};
+                target = { x : childrenOfCubes[i].position.x, y: childrenOfCubes[i].position.y, z: (lowHeight * -50) -105};
                 tween = new TWEEN.Tween(position).to(target, 300);
                 tween.start();
                 tween.onUpdate(function(){
@@ -575,13 +704,7 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
 
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -607,13 +730,7 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
 
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -639,13 +756,7 @@ $(function() {
               //  childrenOfCubes[i].position.z = lowHeight * 30
               //  childrenOfCubes[i].scale.z = lowHeight * 30
                 break
-              case 2:
 
-                break
-              case 3:
-              //  childrenOfCubes[i].position.z = highHeight * 30
-                //childrenOfCubes[i].scale.z = highHeight * 30
-                break
               default:
                 break
             }
@@ -660,9 +771,39 @@ $(function() {
         generateHeights5()
         generateHeights6()
 
-        if (o.low.hit) {
+        //function to move stars on hit
+        function moveStars(system) {
 
+          for ( var c = 0; c < system.vertices.length; c ++ )
+          {
+            var sprite = system.vertices[ c ];
+            tween = new TWEEN.Tween(sprite)
+               .to({
+                 x: Math.random() * 1000 - 500,
+                 y: Math.random() * 1000 - 500,
+                 z: Math.random() * 1000 - 500
+               }, 4000)
+               .onUpdate(function() {
+                 particleSystem.geometry.verticesNeedUpdate = true;
+               })
+               .easing(TWEEN.Easing.Sinusoidal.InOut)
+               .start();
+
+          }
+        }
+
+        function changePlanetColor(planetArray) {
+          for (let i = 0, theLength = planetArray.length; i < theLength; i++) {
+            planetArray[i].material.color.setHex( Math.random() * 0xffffff  )
+          }
+        }
+
+
+        if (o.low.hit) {
+          //sadfsadfasdfCadasdfOasdfsadDasdfasdYas
           let childrenOfCubes = cubes.children
+          moveStars(greenParticles)
+          changePlanetColor(sunObjects)
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
             let random = Math.floor(Math.random() * 3) + 1
             let position = {}
@@ -688,7 +829,7 @@ $(function() {
                 childrenOfCubes[i].material.color.setHex( Math.random() * 0xffffff  );
                 break
             }
-          }
+          }//fasBasdfEasdfRasdfLasdfIasdfasdNasd
           let childrenOfCubes4 = cubes4.children
           for (let i = 0, theLength = childrenOfCubes4.length; i < theLength; i++) {
             let random = Math.floor(Math.random() * 3) + 1
@@ -715,10 +856,12 @@ $(function() {
                 childrenOfCubes4[i].material.color.setHex( Math.random() * 0xffffff  );
                 break
             }
-          }
+          }//dfasMasdfAsadfgDasdfEas
         }
-        if (o.mid.hit) {
+        if (o.mid.hit) {//dfTasdfHasdfIasdfS
+          changePlanetColor(blueObjects)
           let childrenOfCubes = cubes2.children
+          moveStars(greenParticles)
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
             let random = Math.floor(Math.random() * 3) + 1
             let position = {}
@@ -774,7 +917,9 @@ $(function() {
           }
         }
         if (o.high.hit) {
+          changePlanetColor(earthObjects)
           let childrenOfCubes = cubes3.children
+          moveStars(greenParticles)
           for (let i = 0, theLength = childrenOfCubes.length; i < theLength; i++) {
             let random = Math.floor(Math.random() * 3) + 1
             let position = {}

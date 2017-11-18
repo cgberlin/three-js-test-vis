@@ -14,6 +14,9 @@
 	<script src="js/main.js"></script>
 	<script src="js/OrbitControls.js"></script>
 	<script src="semantic/semantic.min.js"></script>
+	<script src='js/threex.atmospherematerial.js'></script>
+	<script src = "range.js"></script>
+	<link href="range.css" rel="stylesheet">
 	<style type="text/css">
 		body {
 			margin:0;
@@ -57,6 +60,56 @@
 			justify-content: center;
 			flex-direction: column;
 		}
+		#mobileWarning {
+			color: #fff;
+		}
+		#fullPageCover {
+			position: absolute;
+			height: 100vh;
+			width: 100vw;
+			top: 0;
+			left: 0;
+			display: flex;
+			flex-flow: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 99999999999999;
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+		#player {
+			position: absolute;
+			bottom: 0;
+			width: 350px;
+	    height: auto;
+			displat: flex;
+			flex-flow: column;
+			align-items: center;
+			justify-content: space-between;
+			background-color: transparent;
+			right: 0;
+		}
+		#playerButtonContainer {
+			display: flex;
+			flex-flow: row;
+			align-items: center;
+			justify-content: space-between;
+			width: 350px;
+			padding-left: 2rem;
+			padding-right: 2rem;
+		}
+
+		.ui.segment {
+			background-color: transparent !important;
+		}
+		#rewind, #pausePlay, #forward {
+			height: 3rem;
+			width: auto;
+		}
+		#rewind:hover, #pausePlay:hover, #forward:hover {
+			cursor: pointer;
+		}
+
+
 	</style>
 </head>
 <body>
@@ -79,8 +132,24 @@
 		  Got it
 		</button>
   </div>
+	</div>
+<div id = "fullPageCover">
+	<img id = "playButton" src = "assets/play-button.png" />
+	<p id = "mobileWarning" class = 'main-font controls-subhead'>This doesnt work anywhere </br> near as good on mobile</p>
 </div>
 </body>
+<div id="player">
+	<div id = "playerButtonContainer">
+		<img id = "rewind" src = "assets/back-icon.png" />
+		<img id = "pausePlay" src = "assets/pause-button.png" />
+		<img id = "forward" src = "assets/forward.png" />
+	</div>
+	<div class="ui segment">
+		 <div class="ui vertical teal range"></div>
+	</div>
+</div>
+
+</div>
 
 
 </html>
